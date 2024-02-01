@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{product.title}}</title>
+</head>
+
+<body>
+    <h1>{{product.title}}</h1>
+    <p>Descripción: {{product.description}}</p>
+    <p>Código: {{product.code}}</p>
+    <p>Precio: {{product.price}}</p>
+    <p>Estado: {{#if product.status}} Disponible {{else}} Agotado {{/if}}</p>
+    <p>Stock: {{product.stock}}</p>
+    <p>Categoría: {{product.category}}</p>
+    {{#if product.thumbnails.length}}
+    <ul>
+        {{#each product.thumbnails}}
+        <li><img src="{{this}}" alt="Thumbnail"></li>
+        {{/each}}
+    </ul>
+    {{/if}}
+
+    <form action="/api/carts/{{cartId}}/products/{{product._id}}" method="post">
+        <button type="submit">Agregar al Carrito</button>
+    </form>
+</body>
+
+</html>

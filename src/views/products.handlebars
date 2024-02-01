@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+</head>
+<body>
+    <h1>Listado de Productos</h1>
+    {{#each products}}
+        <div>
+            <h2>{{title}}</h2>
+            <p>Descripción: {{description}}</p>
+            <p>Código: {{code}}</p>
+            <p>Precio: {{price}}</p>
+            <p>Estado: {{#if status}} Disponible {{else}} Agotado {{/if}}</p>
+            <p>Stock: {{stock}}</p>
+            <p>Categoría: {{category}}</p>
+            {{#if thumbnails.length}}
+                <ul>
+                    {{#each thumbnails}}
+                        <li><img src="{{this}}" alt="Thumbnail"></li>
+                    {{/each}}
+                </ul>
+            {{/if}}
+            <a href="/products/{{_id}}">Ver Detalles</a>
+            <form action="/api/carts/{{cartId}}/products/{{_id}}" method="post">
+                <button type="submit">Agregar al Carrito</button>
+            </form>
+        </div>
+    {{/each}}
+
+    <!-- Paginación -->
+    {{#if totalPages}}
+        <div>
+            {{#if currentPage}}
+                <a href="?page={{currentPage-1}}">&lt; Anterior</a>
+            {{/if}}
+            Página {{currentPage}} de {{totalPages}}
+            {{#if (lt currentPage totalPages)}}
+                <a href="?page={{currentPage+1}}">Siguiente &gt;</a>
+            {{/if}}
+        </div>
+    {{/if}}
+</body>
+</html>
