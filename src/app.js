@@ -6,11 +6,12 @@ import path from 'path';
 import bodyParser from 'body-parser';
 import bcrypt from 'bcrypt';
 
+import __dirname from "./utils.js"
+
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import GitHubStrategy from 'passport-github2';
-import session from 'express-session';
-import UserModel from './models/User';
+import UserModel from './models/User.js';
 
 import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/carts.router.js';
@@ -47,8 +48,8 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, passwor
 
 // Configurar passport para el login con GitHub
 passport.use(new GitHubStrategy({
-  clientID: 'your-client-id',
-  clientSecret: 'your-client-secret',
+  clientID: 'Iv1.3e938b1ebe84378c',
+  clientSecret: '25fba0eec64309c2bee0512f92571c90829bbce5',
   callbackURL: 'http://localhost:8080/auth/github/callback',
 }, async (accessToken, refreshToken, profile, done) => {
   try {

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import ProductModel from '../models/Product'; // Asumiendo que tienes un modelo de producto
+import ProductModel from '../models/Product.js'; // Asumiendo que tienes un modelo de producto
 
 const productsRouter = Router();
 

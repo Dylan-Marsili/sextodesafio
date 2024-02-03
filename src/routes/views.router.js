@@ -1,7 +1,7 @@
 // routes/views.router.js
 import { Router } from 'express';
-import ProductModel from '../models/Product';
-import CartModel from '../models/Cart';
+import ProductModel from '../models/Product.js';
+import CartModel from '../models/Cart.js';
 
 const viewsRouter = Router();
 
