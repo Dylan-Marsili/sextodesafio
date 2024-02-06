@@ -1,7 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import session from 'express-session';
-import exphbs from 'express-handlebars';
+import { engine } from 'express-handlebars';
 import path from 'path';
 import bodyParser from 'body-parser';
 import bcrypt from 'bcrypt';
@@ -90,7 +90,7 @@ passport.deserializeUser(async (id, done) => {
 });
 
 // Conectar a MongoDB
-mongoose.connect('mongodb://localhost:27017/coderhouse', {
+mongoose.connect('mongodb+srv://coder:jIZk1nSKACa6yEmA@codehouse.5nhulxs.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -103,8 +103,11 @@ db.once('open', () => {
 });
 
 // Configuración de Handlebars
-app.engine('.hbs', exphbs({ extname: '.hbs', defaultLayout: 'main', layoutsDir: path.join(__dirname, 'views/layouts') }));
-app.set('view engine', '.hbs');
+app.engine('.handlebars', engine({
+  extname: '.handlebars',
+  defaultLayout: 'main',
+}));
+app.set('view engine', '.handlebars');
 app.set('views', path.join(__dirname, 'views'));
 
 // Middleware para manejar solicitudes con cuerpo en formato JSON

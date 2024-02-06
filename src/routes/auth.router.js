@@ -14,6 +14,32 @@ authRouter.post('/login', passport.authenticate('local', {
   failureFlash: true,
 }));
 
+authRouter.get('/register', (req, res) => {
+  res.render('register');
+});
+
+authRouter.post('/register', async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    // Verificar si el usuario ya existe
+    const existingUser = await UserModel.findOne({ email });
+
+    if (existingUser) {
+      return res.render('register', { error: 'El usuario ya existe' });
+    }
+
+    // Crear un nuevo usuario
+    const newUser = new UserModel({ name, email, password });
+
+    await newUser.save();
+    res.redirect('/auth/login');
+  } catch (error) {
+    console.error(error);
+    res.render('register', { error: 'Error al registrar el usuario' });
+  }
+});
+
 authRouter.get('/github', passport.authenticate('github'));
 
 authRouter.get('/github/callback', 
