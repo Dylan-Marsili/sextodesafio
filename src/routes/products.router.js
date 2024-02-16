@@ -43,7 +43,9 @@ productsRouter.get('/', async (req, res, next) => {
       hasNextPage,
       prevLink,
       nextLink,
+      currentPage: page, // Agrega esta línea para definir currentPage
     };
+    
 
     res.json(result);
   } catch (error) {

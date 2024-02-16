@@ -26,12 +26,13 @@
     <!-- Paginación -->
     {{#if totalPages}}
         <div>
-            {{#if currentPage}}
-                <a href="?page={{currentPage-1}}">&lt; Anterior</a>
+            {{#if prevPage}}
+                <a href="?page={{prevPage}}">&lt; Anterior</a>
             {{/if}}
-            Página {{currentPage}} de {{totalPages}}
-            {{#if (lt currentPage totalPages)}}
-                <a href="?page={{currentPage+1}}">Siguiente &gt;</a>
+            Página {{page}} de {{totalPages}}
+            {{#if nextPage}}
+                <a href="?page={{nextPage}}">Siguiente &gt;</a>
             {{/if}}
         </div>
     {{/if}}
+

@@ -17,6 +17,7 @@ import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/carts.router.js';
 import viewsRouter from './routes/views.router.js';
 import authRouter from './routes/auth.router.js';
+import flash from 'connect-flash'
 
 const app = express();
 const PORT = 8080;
@@ -24,6 +25,8 @@ const PORT = 8080;
 app.use(session({ secret: 'my-secret-key', resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(flash());
 
 // Configurar passport para el login local
 passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
@@ -53,18 +56,18 @@ passport.use(new GitHubStrategy({
   callbackURL: 'http://localhost:8080/auth/github/callback',
 }, async (accessToken, refreshToken, profile, done) => {
   try {
-    // Verificar si ya existe un usuario con este ID de GitHub
+    // Verifica si ya existe un usuario con el ID de GitHub
     const existingUser = await UserModel.findOne({ githubId: profile.id });
 
     if (existingUser) {
       return done(null, existingUser);
     }
 
-    // Crear un nuevo usuario con el ID de GitHub
+    // Crea un nuevo usuario con el ID de GitHub y maneja la falta de correo electrónico
     const newUser = new UserModel({
       githubId: profile.id,
       name: profile.displayName,
-      email: profile.emails ? profile.emails[0].value : '',
+      email: profile.emails && profile.emails.length > 0 ? profile.emails[0].value : 'correo_aleatorio@example.com',
       // Otras propiedades según tus necesidades
     });
 
